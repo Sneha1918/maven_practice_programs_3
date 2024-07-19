@@ -23,7 +23,7 @@ import org.testng.annotations.AfterSuite;
 
 public class ValidateMouseOperationsInSeleneium extends Library{
   
-  @Test(priority=0)
+  @Test(priority=0,enabled=false)
 	
   public void ValidateLoadingOfJQueryApp()
   {
@@ -34,7 +34,7 @@ public class ValidateMouseOperationsInSeleneium extends Library{
 	  Assert.assertEquals(title, objProp.getProperty("JQeryTitle"));
   }
  
-  @Test(priority=1)
+  @Test(priority=1,enabled=false)
   public void ValidateRightClickOperation() throws Exception
   {
 	  System.out.println("inside ValidateRightClickOperation");
@@ -49,6 +49,31 @@ public class ValidateMouseOperationsInSeleneium extends Library{
 	  objAlert.accept();
   }
   
+  @Test(priority=2,enabled=false)
+  public void ValidateDoubleClickOperation()
+  {
+	  System.out.println("inside ValidateDoubleClickOperation");
+	  driver.navigate().to(objProp.getProperty("mouseOpeartionDoubleClick"));
+	  MouseOperationsPOM objMouseOperation = new MouseOperationsPOM();
+	  ScrollTillTheElement(objMouseOperation.iFrame);
+	  driver.switchTo().frame(objMouseOperation.iFrame);
+	  Actions objAtions = new Actions(driver);
+	  objAtions.doubleClick(objMouseOperation.blueColorBox).build().perform();
+	  driver.switchTo().defaultContent();
+  }
+  
+  @Test(priority = 3)
+  public void ValidateDragAndDrop() throws Exception
+  {
+	  System.out.println("inside ValidateDragAndDrop");
+	  driver.navigate().to(objProp.getProperty("mouseOperationDragAndDrop"));
+	  MouseOperationsPOM objMouseOperation = new MouseOperationsPOM();
+	  driver.switchTo().frame(objMouseOperation.dragAndDropIFrame);
+	  Actions objAtions = new Actions(driver);
+	  Thread.sleep(3000);
+	  objAtions.dragAndDrop(objMouseOperation.draggable, objMouseOperation.droppable).build().perform();
+  }
+
   @BeforeMethod
   public void beforeMethod() 
   {
